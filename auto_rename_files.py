@@ -1,27 +1,24 @@
 import os
 import re
 
-def rename_files(directory):
-    
-    # Change the working directory to the specified one
-    os.chdir(directory)
+def rename_images(directory):
+    images = [f for f in os.listdir(directory) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+    images.sort()  # Sort files to ensure correct order
 
-    # Get a list of all the image files in the directory
-    files = [f for f in os.listdir() if re.match(r".*\.(jpg|jpeg|png|gif)$", f, re.I)]
-
-    # Sort files for consistent renaming
-    files.sort()  
+    # Determine the format using the first image
+    if images:
+        first_image = images[0]
+        number_format = re.search(r'\d+', first_image)
+        if number_format:
+            leading_zeros = len(number_format.group(0))
     
-    # Determine the number of digits needed for numbering
-    num_files = len(files)
-    num_digits = len(str(num_files))
-    
-    # Rename the files
-    for index, file in enumerate(files):
-        # Create new filename with consistent digit lengths
-        new_name = f"image_{str(index + 1).zfill(num_digits)}{os.path.splitext(file)[1]}"
-        os.rename(file, new_name)
-        print(f"Renamed '{file}' to '{new_name}'")
+    for index, image in enumerate(images):
+        if images:
+            # Determine new file name with leading zeros
+            new_index = str(index + 1).zfill(leading_zeros)  # Match leading zeros
+            new_name = re.sub(r'\d+', new_index, image)
+            os.rename(os.path.join(directory, image), os.path.join(directory, new_name))
+            print(f'Renamed: {image} -> {new_name}')  # Logging for reference
 
-# Example usage:
-# rename_files('path/to/your/images')
+# Usage
+# rename_images('path_to_your_images')
