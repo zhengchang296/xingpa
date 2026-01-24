@@ -1,10 +1,6 @@
-# auto_rename_files.py
+# Auto Rename Files Script
 
-# Your previous code...
+# Your existing code goes here...
 
-import time
-
-# Ensures the terminal stays open after execution.
-time.sleep(5)  # Pauses for 5 seconds
-
-# Rest of your script...
+# Adding a pause at the end of the script
+input("Press Enter to exit...")
