@@ -4,6 +4,7 @@ Unity Bundle Processor
 Processes Unity bundle files and restores images from them with grid generation.
 """
 
+import math
 import os
 import sys
 from pathlib import Path
@@ -70,7 +71,6 @@ def process_bundle(bundle_file, output_dir):
         # Calculate grid dimensions dynamically
         print("[3/4] Generating image grid...")
         # Calculate grid as close to square as possible
-        import math
         grid_cols = math.ceil(math.sqrt(image_count))
         grid_rows = math.ceil(image_count / grid_cols)
         print(f"      Creating {grid_rows}x{grid_cols} grid")
