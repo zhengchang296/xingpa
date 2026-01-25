@@ -63,21 +63,28 @@ def process_bundle(bundle_file, output_dir):
         # Simulate extracting images
         print("[2/4] Extracting images from bundle...")
         # In a real implementation, this would extract actual images
-        print("      Found 12 images in bundle")
+        # For now, using a simulated count based on file size
+        image_count = 12  # Placeholder: would be determined by actual bundle parsing
+        print(f"      Found {image_count} images in bundle")
         
-        # Simulate grid generation
+        # Calculate grid dimensions dynamically
         print("[3/4] Generating image grid...")
-        grid_rows = 3
-        grid_cols = 4
+        # Calculate grid as close to square as possible
+        import math
+        grid_cols = math.ceil(math.sqrt(image_count))
+        grid_rows = math.ceil(image_count / grid_cols)
         print(f"      Creating {grid_rows}x{grid_cols} grid")
         
-        # Simulate image restoration
+        # Simulate image restoration with progress
         print("[4/4] Restoring images...")
-        for i in range(1, 13):
-            print(f"      Restoring image {i}/12...")
+        for i in range(1, image_count + 1):
+            # In real implementation, actual image processing would happen here
+            if i % 5 == 0 or i == image_count:
+                # Print progress every 5 images or at completion
+                print(f"      Restored {i}/{image_count} images...")
         
         print(f"\n✓ Successfully processed bundle file")
-        print(f"✓ Restored 12 images to: {output_dir}")
+        print(f"✓ Restored {image_count} images to: {output_dir}")
         print(f"✓ Generated image grid: {os.path.join(output_dir, 'grid.png')}")
         
         return True
@@ -88,6 +95,26 @@ def process_bundle(bundle_file, output_dir):
     except Exception as e:
         print(f"\n✗ Error processing bundle: {e}")
         return False
+
+
+def get_user_confirmation(prompt="Would you like to process another file? (y/n): "):
+    """
+    Get yes/no confirmation from user.
+    
+    Args:
+        prompt: The prompt message to display
+    
+    Returns:
+        bool: True if user confirms (y), False otherwise (n or empty)
+    """
+    while True:
+        response = input(prompt).strip().lower()
+        if response == 'y':
+            return True
+        elif response == 'n' or response == '':
+            return False
+        else:
+            print("Invalid input. Please enter 'y' to continue or 'n' to exit.")
 
 
 def main():
@@ -116,16 +143,11 @@ def main():
             
             # Prompt user to process another file
             print("\n" + "=" * 60)
-            while True:
-                response = input("Would you like to process another file? (y/n): ").strip().lower()
-                if response == 'y':
-                    print("\n")  # Add spacing before next iteration
-                    break
-                elif response == 'n' or response == '':
-                    print("\nThank you for using Unity Bundle Processor. Goodbye!")
-                    return
-                else:
-                    print("Invalid input. Please enter 'y' to continue or 'n' to exit.")
+            if get_user_confirmation():
+                print("\n")  # Add spacing before next iteration
+            else:
+                print("\nThank you for using Unity Bundle Processor. Goodbye!")
+                return
         
         except KeyboardInterrupt:
             print("\n\nOperation cancelled by user.")
