@@ -32,7 +32,7 @@ def replace_both(first_value):
         }
     }
 
-    # 输出生成的pathID
+    # 输出生成的 pathID
     print("生成的pathID:", new_pathID)
 
     # 输出第一个 JSON 结果
@@ -40,10 +40,29 @@ def replace_both(first_value):
     print("      {")
     print(f"        \"m_FileID\": {data1['m_FileID']},")
     print(f"        \"m_PathID\": {data1['m_PathID']}")
-    print("      },")  # 添加逗号
+    print("      },")  # 为第一份 JSON 添加逗号
+
+    # 再次输出第一个 JSON 结果，不加逗号
+    print("      {")
+    print(f"        \"m_FileID\": {data1['m_FileID']},")
+    print(f"        \"m_PathID\": {data1['m_PathID']}")
+    print("      }")  # 第二份 JSON 结果不需要逗号
 
     # 输出第二个 JSON 结果
     print("第二个JSON结构替换结果:")
+    print("      {")
+    print(f"        \"first\": \"{data2['first']}\";")
+    print("        \"second\": {")
+    print(f"          \"preloadIndex\": {data2['second']['preloadIndex']},")
+    print(f"          \"preloadSize\": {data2['second']['preloadSize']},")
+    print("          \"asset\": {")
+    print(f"            \"m_FileID\": {data2['second']['asset']['m_FileID']},")
+    print(f"            \"m_PathID\": {data2['second']['asset']['m_PathID']}")
+    print("          }")
+    print("        }")
+    print("      },")  # 为第一份 JSON 添加逗号
+
+    # 再次输出第二个 JSON 结果，不加逗号
     print("      {")
     print(f"        \"first\": \"{data2['first']}\",")
     print("        \"second\": {")
@@ -54,7 +73,7 @@ def replace_both(first_value):
     print(f"            \"m_PathID\": {data2['second']['asset']['m_PathID']}")
     print("          }")
     print("        }")
-    print("      },")  # 添加逗号
+    print("      }")
 
 # 按 `Enter` 控制是否生成下一次运行
 def main():
