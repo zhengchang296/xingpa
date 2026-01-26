@@ -1,13 +1,12 @@
 import random
 
+INT64_MIN = -2**63
+INT64_MAX = 2**63 - 1
+
 def generate_pathID():
-    # 随机生成正负号（+ 或 -）
-    sign = random.choice(['', '-'])
-    # 生成19位纯数字
-    digits = ''.join(random.choices('0123456789', k=19))
-    # 拼接成最终的pathID
-    pathID = sign + digits
-    return int(pathID)  # 转为整数
+    # 在合理范围内随机生成 pathID
+    pathID = random.randint(INT64_MIN, INT64_MAX)
+    return pathID
 
 def replace_both(first_value):
     # 生成新的pathID（只生成一次，用于两个 JSON 结构）
@@ -64,7 +63,7 @@ def replace_both(first_value):
 
     # 再次输出第二个 JSON 结果，不加逗号
     print("      {")
-    print(f"        \"first\": \"{data2['first']}\",")
+    print(f"        \"first\": \"{data2['first']}\";")
     print("        \"second\": {")
     print(f"          \"preloadIndex\": {data2['second']['preloadIndex']},")
     print(f"          \"preloadSize\": {data2['second']['preloadSize']},")
