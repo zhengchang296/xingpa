@@ -5,11 +5,7 @@
 
 <img width="1219" height="881" alt="image" src="https://github.com/user-attachments/assets/84ba565c-4feb-41e3-b6bb-c52cf398ca4f" />
 
-第二步、打开想要替换动画的Texture2D的001json文件找到图像资源代码CAB进行修改，改为被替换动画Texture2D中的CAB代码。
-
-<img width="1046" height="281" alt="image" src="https://github.com/user-attachments/assets/2aa0d54d-84a9-4062-8724-af91989877ab" />
-
-随后用右侧的插件修改Texture2D图片，Load导入替换动画的精灵图。
+第二步、随后用右侧的插件修改Texture2D图片，Load导入替换动画的精灵图。
 
 <img width="755" height="614" alt="image" src="https://github.com/user-attachments/assets/0d037de4-2e94-481b-b533-9b401fcec8cd" />
 
