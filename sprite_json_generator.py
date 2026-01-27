@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import os
 import json
 import random
+import argparse
 from PIL import Image
 
 def 生成SpriteJson(输出目录, 图片路径, 名称, 帧数, 行数, 每行数量, texture_m_PathID):
@@ -114,3 +116,25 @@ def 生成SpriteJson(输出目录, 图片路径, 名称, 帧数, 行数, 每行�
 
     print(f"✅ 成功生成 {帧数} 个 JSON Sprite 文件，保存到 {输出目录}")
     return 生成的JSON列表
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="生成 JSON Sprite 文件。")
+    parser.add_argument("--输出目录", type=str, required=True, help="存储 JSON 文件的输出目录。")
+    parser.add_argument("--图片路径", type=str, required=True, help="输入图片的路径。")
+    parser.add_argument("--名称", type=str, required=True, help="JSON 文件的名称前缀。")
+    parser.add_argument("--帧数", type=int, required=True, help="生成的 Sprite 数量（帧数）。")
+    parser.add_argument("--行数", type=int, required=True, help="图像的行数。")
+    parser.add_argument("--每行数量", type=int, required=True, help="每行的图片数量。")
+    parser.add_argument("--texture_m_PathID", type=int, default=0, help="纹理的 Path ID（备用参数）。")
+
+    args = parser.parse_args()
+
+    生成SpriteJson(
+        输出目录=args.输出目录,
+        图片路径=args.图片路径,
+        名称=args.名称,
+        帧数=args.帧数,
+        行数=args.行数,
+        每行数量=args.每行数量,
+        texture_m_PathID=args.texture_m_PathID
+    )
