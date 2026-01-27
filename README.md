@@ -1,8 +1,12 @@
-该替换方式可跳过一帧一帧地更换图片及其图片对齐，同时可以自由的调整帧数。需要准备AssetStudio、UABEA，然后编辑json代码我用的是Visual Studio Code。AssetStudio主要用于查找目标bundle
+该替换方式可跳过一帧一帧地更换图片及其图片对齐，同时可以自由的调整帧数。需要准备AssetStudio、UABEA，然后编辑json代码我用的是Visual Studio Code。AssetStudio主要用于查找目标bundle，UABEA主要用于修改bundle。
 
 目前仅限于修改已有的动画文件，因为我还没有研究如何将每一帧的动画从Sprite里抠出来的代码。不过我目前有一个思路，就是直接将每一帧的图片拼成一整张图片，再去处理对应的json代码就行了，我记得好像要写rect代码。
 
-第一步、UABEA解包你想要替换成的动画对应的bundle文件，将所有所有walk带数字的文件导出转储为json格式，需要被替换的动画的bundle文件则需要导出Texture2D的json
+首先，被替换的动画我称作原动画，你自己准备的动画我称作新动画。我这里有两种修改方式。
+
+第一种，使用同个游戏的其他动画替换原动画。
+
+用UABEA解包你新动画对应的bundle文件，将所有所有walk带数字的文件即Sprite文件export dump为json，texture2D文件的图片也要导出；原动画则需要导出Texture2D的json
 
 <img width="1219" height="881" alt="image" src="https://github.com/user-attachments/assets/84ba565c-4feb-41e3-b6bb-c52cf398ca4f" />
 
