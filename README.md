@@ -72,10 +72,22 @@ Assetbundle
 
 <img width="646" height="282" alt="image" src="https://github.com/user-attachments/assets/0e9cc4dc-f5a6-4619-8129-4bb065e1dca3" />
 
-现在告诉你如何修改，首先找到size=1的，它的index加或减你修改的帧数、即Sprite项数。接着，size最大的和sizeMAX-1的，size加减你的帧数。接着，修改以上二者的index，index=0的不需要修改，不为零的加减帧数。如果新增了Sprite的container结构，则记得修改index和size使其与其他Sprite的一致。此时，Assetbundle的修改就结束了。
+现在告诉你如何修改，首先找到size=1的，它的index加或减你修改的帧数、即Sprite项数。接着，size最大的和sizeMAX-1的，size加减你的帧数。接着，修改以上二者的index，index=0的不需要修改，不为零的加减帧数。如果新增了Sprite的container结构，则记得修改index和size使其与其他Sprite的一致。此时，Assetbundle的修改就结束了,导入即可。
 
 
-MONObehaviour和animationclip
+MONObehaviour和Animationclip
+
+MONO的修改就简单,加减帧数就直接在下图中的列表中删除Sprite的对应的结构，加帧数要在列表的最后添加，这个就是动画帧的顺序。改完就结束了。
+
+<img width="481" height="219" alt="image" src="https://github.com/user-attachments/assets/e25c32e1-8429-4057-96f8-b0671d1f1849" />
+
+animation的修改相对复杂。
+
+首先先像MONO一样，修改Sprite列表。
+
+接着，找到m_StreamedClip列表。他的数组（array）的行数是跟你的帧数有关的，为帧数*7+2。这最后的两行不要修改，在它两上面开始修改至匹配即可，(我)即可
+
+<img width="460" height="256" alt="image" src="https://github.com/user-attachments/assets/c36e8a39-03bd-4682-b87f-b82c383d6138" />
 
 
 
