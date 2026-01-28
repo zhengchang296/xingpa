@@ -50,7 +50,7 @@ def replace_both(first_value):
     # 输出第二个 JSON 结果
     print("第二个JSON结构替换结果:")
     print("      {")
-    print(f"        \"first\": \"{data2['first']}\";")
+    print(f"        \"first\": \"{data2['first']}\",")
     print("        \"second\": {")
     print(f"          \"preloadIndex\": {data2['second']['preloadIndex']},")
     print(f"          \"preloadSize\": {data2['second']['preloadSize']},")
@@ -63,7 +63,7 @@ def replace_both(first_value):
 
     # 再次输出第二个 JSON 结果，不加逗号
     print("      {")
-    print(f"        \"first\": \"{data2['first']}\";")
+    print(f"        \"first\": \"{data2['first']}\",")
     print("        \"second\": {")
     print(f"          \"preloadIndex\": {data2['second']['preloadIndex']},")
     print(f"          \"preloadSize\": {data2['second']['preloadSize']},")
