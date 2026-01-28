@@ -20,10 +20,10 @@
 <img width="629" height="392" alt="image" src="https://github.com/user-attachments/assets/1336fc8d-2328-4ed4-a75c-75e832684eac" />
 <img width="293" height="855" alt="image" src="https://github.com/user-attachments/assets/3a9ddd22-bceb-42ac-aa1e-736367d256c4" />
 
-接着将新动画每个sprite的json，import dump对应的原动画Sprite。如果你新动画的帧数小于原动画，记得按顺序将对应的Sprite导入，后直接删除多余的sprite文件即可，记得删数字最大的。如果新动画帧数大于原动画，那么有两种方法。一定要看完，后面还有步骤。
+接着将新动画每个sprite的json，import dump对应的原动画Sprite。如果你新动画的帧数小于原动画，记得按顺序将对应的Sprite导入，后直接删除多余的sprite文件即可，记得删数字最大的，。如果新动画帧数大于原动画，那么有两种方法。一定要看完，帧数少和方法二后面还有步骤。
 
 方法一，则需要修改你新动画相应json文件中的m_name。
-这一步的对应关系比较复杂，就是你现选取你需要的帧数，如你想导入新动画的00000--00010、00021--00028这些帧，那就修改新动画的名称中带相应数字的json文件，使得里面的m_name变成连续的，即将00021--00028中n_name的数字改为00011--00018，所有文件的n_name必须保持连续，这样动画运行过程中才能在相应的帧数中读取
+这一步的对应关系比较复杂，就是你现选取你需要的帧数，如你想导入新动画的00000--00010、00021--00028这些帧，那就修改新动画的名称中带相应数字的json文件，使得里面的m_name变成连续的，即将00021--00028中n_name的数字改为00011--00018，所有文件的n_name必须保持连续，这样动画运行过程中才能在相应的帧数中读取。方法一到这里就结束了，帧数少的和方法二还要往后看。
 
 <img width="431" height="280" alt="image" src="https://github.com/user-attachments/assets/abbe562e-837a-4749-ba17-72a54b15541b" />
 
@@ -45,7 +45,21 @@
 
 <img width="1377" height="869" alt="image" src="https://github.com/user-attachments/assets/b57c11ce-8ffe-486f-afeb-e1528443bba9" />
 
-接着用import dump导入修改后的json文件。
+接着用import dump导入修改后Sprite的json文件。
+
+
+帧数少和方法二的后续步骤。修改assetbundle的json中的preloadtable和container，修改MONObehaviour的Sprite，修改animationclip的m_StreamedClip的行数、m_FrameCount的数值、m_StopTime数值、m_ValueArrayDelta里stop的数值，然后还有一些可以修改的属性设置我会写在最后，自行判断。
+
+<img width="435" height="119" alt="image" src="https://github.com/user-attachments/assets/9506df46-38f3-46c5-acf6-3dbcc5042107" />
+<img width="620" height="276" alt="image" src="https://github.com/user-attachments/assets/8d14cef2-2ac8-4555-8be9-2aece1a5baca" />
+<img width="455" height="208" alt="image" src="https://github.com/user-attachments/assets/12e79b45-1af9-4ce2-a6e5-ff4e085141a3" />
+
+
+帧数少的，直接删除多余SpritePathID对应的preloadtable和container
+
+
+
+
 
 
 
