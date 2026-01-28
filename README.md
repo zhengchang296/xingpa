@@ -93,12 +93,16 @@ animation的修改相对复杂。
 
 <img width="478" height="600" alt="image" src="https://github.com/user-attachments/assets/39f2464f-4547-4c05-accc-8a83d913d0c6" />
 
-最后修改m_ValueArrayDelta的stop，stop加减修改帧数即可。如我要加一帧，即18变19.
+最后修改m_ValueArrayDelta的stop，stop加减修改帧数即可。如我要加一帧，即18变1。以上就结束了。
 
 <img width="436" height="220" alt="image" src="https://github.com/user-attachments/assets/cee54186-7be9-4c28-bfcb-ca0a1b382eb4" />
 
 
+最后是一些可修改的属性。
 
+m_MuscleClipSize，我一般将原动画的这个改为新动画的。
+
+samplerate，我一般不改帧数。
 
 
 
