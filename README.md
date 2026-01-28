@@ -55,7 +55,29 @@
 <img width="455" height="208" alt="image" src="https://github.com/user-attachments/assets/12e79b45-1af9-4ce2-a6e5-ff4e085141a3" />
 
 
-帧数少的，直接删除多余SpritePathID对应的preloadtable和container
+Assetbundle
+
+帧数少的，直接删除多余SpritePathID对应的preloadtable和container的结构，如下图的结构，每个Sprite对应的有三个下类结构，记得删干净。
+
+<img width="1290" height="877" alt="image" src="https://github.com/user-attachments/assets/6a4a7b22-376d-44ba-a051-8a436c9b4123" />
+
+帧数多的，则要添加相应的结构，preloadtable里Sprite的排列顺序是按照PathID的大小排列的，我一般是按着相应的顺序插入，不知道随意插入有没有影响，container的我则是插入。
+
+这里讲解一下preloadtable与container的关系，如果不想看，也可以直接跳到下一步。preloadtable里加载的项包含了：一个fileid=1的项，这个项我认为是对应Assetbundle，两套Sprite和MONObehaviour，两个texture2D。
+
+如果你去阅读代码，就会发现container里的preloadindex和preloadsize跟preloadtable的顺序是对应的。整个preloadtable被分为三组，组1是包含Assetbundle、一个texture2D和一套Sprite和monobehaviour，组2只有一个单独的texture2D，组3包含一个animationclip、一套MONObehaviour和Sprite。还有一点，这三个组在preloadtable出现的顺序每个文件中可能是不一样的。
+
+然后在container中可见，组1没有出现Assetbundle的结构，组3只有animationclip的结构。(这说明他们的加载调用方式是有一定的，你们可以自己理解，这个不重要)
+此时，就能index和size的关系了，size就是组中有几项，index就是在preloadtable出现的位置，记住，preloadtable的索引是从0开始的，因此需要在container中一项一项的区修改index和size，这里有一个口诀，这一组的index+size等于下一组的index，按这个去修改就行。
+
+<img width="646" height="282" alt="image" src="https://github.com/user-attachments/assets/0e9cc4dc-f5a6-4619-8129-4bb065e1dca3" />
+
+现在告诉你如何修改，首先找到size=1的，它的index加或减你修改的帧数、即Sprite项数。接着，size最大的和sizeMAX-1的，size加减你的帧数。接着，修改以上二者的index，index=0的不需要修改，不为零的加减帧数。如果新增了Sprite的container结构，则记得修改index和size使其与其他Sprite的一致。此时，Assetbundle的修改就结束了。
+
+
+MONObehaviour和animationclip
+
+
 
 
 
