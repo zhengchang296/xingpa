@@ -85,9 +85,17 @@ animation的修改相对复杂。
 
 首先先像MONO一样，修改Sprite列表。
 
-接着，找到m_StreamedClip列表。他的数组（array）的行数是跟你的帧数有关的，为帧数*7+2。这最后的两行不要修改，在它两上面开始修改至匹配即可，(我)即可
+接着，找到m_StreamedClip列表。他的数组（array）的行数是跟你的帧数有关的，为帧数*7+2。这最后的两行不要修改，在它两上面开始修改至匹配即可，(我一般是改的因为这东西会影响内存占用，不过也问过AI，AI说可改可不改)。如果添加帧数，你可以直接从新动画的animationclip里获取，我看的几个同个游戏内的streamedclip基本上使用的都是同一个序列的，只是从头开始截取的行数不同，因此可以直接从帧数多的动画里复制过来。
 
 <img width="460" height="256" alt="image" src="https://github.com/user-attachments/assets/c36e8a39-03bd-4682-b87f-b82c383d6138" />
+
+再往下几行，就是framecount和stoptime。framecount修改为在Assetbundle中animation对应的preloadsize即可，stoptime改为stoptime/framecount(old)*framecount(new)。stoptime大概率为framecount/samplerate，可能有的游戏数值会有点特殊，比如我的游戏就是0.6666675而不是0.6333334，自行注意一下就好了。
+
+<img width="478" height="600" alt="image" src="https://github.com/user-attachments/assets/39f2464f-4547-4c05-accc-8a83d913d0c6" />
+
+最后修改m_ValueArrayDelta的stop，stop加减修改帧数即可。如我要加一帧，即18变19.
+
+<img width="436" height="220" alt="image" src="https://github.com/user-attachments/assets/cee54186-7be9-4c28-bfcb-ca0a1b382eb4" />
 
 
 
