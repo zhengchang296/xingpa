@@ -4,14 +4,14 @@ import json
 def modify_json_files(folder_path, new_path_id):
     # 遍历文件夹中的所有文件
     for filename in os.listdir(folder_path):
-        if filename.endswith('.json'):
+        if filename.endswith('.json'):  # 检查是否是 JSON 文件
             file_path = os.path.join(folder_path, filename)
             try:
-                # 打开并读取 JSON 文件
+                # 打开并读取 JSON 文件内容
                 with open(file_path, 'r', encoding='utf-8') as file:
                     data = json.load(file)
 
-                # 检查并修改 m_RD.texture.m_PathID 字段
+                # 检查是否包含目标字段 m_RD.texture.m_PathID，并进行修改
                 if "m_RD" in data and "texture" in data["m_RD"] and "m_PathID" in data["m_RD"]["texture"]:
                     old_path_id = data["m_RD"]["texture"]["m_PathID"]
                     data["m_RD"]["texture"]["m_PathID"] = new_path_id
@@ -35,4 +35,7 @@ if __name__ == "__main__":
             new_path_id = int(input("请输入新的 PathID 值：").strip())
             modify_json_files(folder_path, new_path_id)
         except ValueError:
-            print("PathID 值无效，需要输入一个整数。")
+            print("PathID 值无效，请输入一个正确的整数。")
+
+    # 为了防止窗口关闭，等待用户按下 Enter 键
+    input("处理完成，按 Enter 键退出程序...")
