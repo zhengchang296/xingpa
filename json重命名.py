@@ -25,8 +25,14 @@ def modify_json_files(folder_path, new_path_id):
             except Exception as e:
                 print(f'处理文件 {filename} 时出错: {e}')
 
-# 示例调用
-# 替换为文件夹路径和新的 PathID
-folder_path = "./json_files"
-new_path_id = 123456789
-modify_json_files(folder_path, new_path_id)
+if __name__ == "__main__":
+    # 动态获取文件夹路径和新的 PathID
+    folder_path = input("请输入包含JSON文件的文件夹路径：").strip()
+    if not os.path.exists(folder_path):
+        print("文件夹路径无效，请确认后重新运行脚本。")
+    else:
+        try:
+            new_path_id = int(input("请输入新的 PathID 值：").strip())
+            modify_json_files(folder_path, new_path_id)
+        except ValueError:
+            print("PathID 值无效，需要输入一个整数。")
