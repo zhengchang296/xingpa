@@ -39,7 +39,7 @@ def replace_both(first_value, preload_index, preload_size):
     print("      {")
     print(f"        \"m_FileID\": {data1['m_FileID']},")
     print(f"        \"m_PathID\": {data1['m_PathID']}")
-    print("      }")
+    print("      },")
 
     # 输出第二个 JSON 结果
     print("\n第二个JSON结构替换结果:")
@@ -53,7 +53,7 @@ def replace_both(first_value, preload_index, preload_size):
     print(f"            \"m_PathID\": {data2['second']['asset']['m_PathID']}")
     print("          }")
     print("        }")
-    print("      }")
+    print("      },")
 
 # 按 `Enter` 控制是否生成下一次运行
 def main():
