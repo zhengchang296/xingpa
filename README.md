@@ -1,4 +1,4 @@
-该替换方式可跳过一帧一帧地更换图片及其图片对齐，同时可以自由的调整帧数。需要准备AssetStudio、UABEA，然后编辑json代码我用的是Visual Studio Code。AssetStudio主要用于查找目标bundle，UABEA主要用于修改bundle。
+该替换方式可跳过一帧一帧地更换图片及其图片对齐，同时可以自由的调整帧数。需要准备AssetStudio、UABEA，然后编辑json代码我用的是Visual Studio Code。AssetStudio主要用于查找目标bundle，UABEA主要用于修改bundle。对于部分脚本的使用会在最后讲解。
 
 目前仅限于修改已有的动画文件，因为我还没有研究如何将每一帧的动画从Sprite里抠出来的代码。不过我目前有一个思路，就是直接将每一帧的图片拼成一整张图片，再去处理对应的json代码就行了，我记得好像要写rect代码。
 
@@ -109,6 +109,19 @@ animation的修改相对复杂。
 m_MuscleClipSize，我一般将原动画的这个改为新动画的。
 
 samplerate，我一般不改帧数。
+
+
+脚本介绍
+
+自动生成PathID，你只要输入一个container和相应的index和size，就会给你随机生成一个PathID。
+
+Sprite PathID 重命名，能够修改你给与的Sprite的json文件中，引用Texture2D文件的PathID，用于简化修改。
+
+图片顺序重命名，能够修改图片的名称，使其从00000开始连续递增，图片名称最好是只有一部分数字，不然可能会出事。作用：Name_00001、Name_00004、Name_00006。 修改为Name_00000、Name_00001、Name_00002。
+
+剩余两个脚本专用性较强，可以不必关注。
+
+
 
 
 
