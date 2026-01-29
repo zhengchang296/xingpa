@@ -17,6 +17,8 @@
 
 最后，最痛苦的来了。修改新动画每个sprite文件的json文件，在里面找到pathID，替换为原动画动画bundle文件中Texture2D文件的pathID即路径ID。
 
+这步已被相对简化，对应PathID的修改可使用提供的脚本修改。
+
 <img width="629" height="392" alt="image" src="https://github.com/user-attachments/assets/1336fc8d-2328-4ed4-a75c-75e832684eac" />
 <img width="293" height="855" alt="image" src="https://github.com/user-attachments/assets/3a9ddd22-bceb-42ac-aa1e-736367d256c4" />
 
@@ -72,7 +74,7 @@ Assetbundle
 
 <img width="646" height="282" alt="image" src="https://github.com/user-attachments/assets/0e9cc4dc-f5a6-4619-8129-4bb065e1dca3" />
 
-现在告诉你如何修改，首先找到size=1的，它的index加或减你修改的帧数、即Sprite项数。接着，size最大的和sizeMAX-1的，size加减你的帧数。接着，修改以上二者的index，index=0的不需要修改，不为零的加减帧数。如果新增了Sprite的container结构，则记得修改index和size使其与其他Sprite的一致。此时，Assetbundle的修改就结束了,导入即可。
+现在告诉你如何修改，首先找到size=1的组，它的index加或减你修改的帧数也有可能是加减二倍、即Sprite项数，需要看他出现的位置。接着，size最大的和sizeMAX-1的组，size加减你的帧数。接着，修改以上二者的index，index=0或index=1则的不需要修改，其中大的那个加减帧数。如果新增了Sprite的container结构，则记得修改使同一组中的index和size使其与其他Sprite的一致。此时，Assetbundle的修改就结束了,导入即可。
 
 
 MONObehaviour和Animationclip
@@ -82,6 +84,10 @@ MONO的修改就简单,加减帧数就直接在下图中的列表中删除Sprite
 <img width="481" height="219" alt="image" src="https://github.com/user-attachments/assets/e25c32e1-8429-4057-96f8-b0671d1f1849" />
 
 animation的修改相对复杂。
+
+先讲解优化过的方法。首先先像MONO一样，修改原动画的Sprite列表。接着你可以直接导出新动画的animationclip，然后将修改过后的原动画的Sprite直接替换到新动画上。然后导入新动画修改后的animationclip。
+
+原方法。
 
 首先先像MONO一样，修改Sprite列表。
 
