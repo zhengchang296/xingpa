@@ -75,39 +75,55 @@
 
 Assetbundle文件部分
 
-需要添加相应的结构，preloadtable里Sprite的排列顺序是按照PathID的大小排列的，我一般是按着相应的顺序插入，不知道随意插入有没有影响，container的我则是随意插入。注意，preloadtable这里需要插入两次下图的第一个json结构。我推荐一种方法就是按PathID大小排序后，复制新增项上面那项Sprite的PathID，然后到VSC（json文件编辑器）中查找该PathID，
+需要添加相应的结构，preloadtable里Sprite的排列顺序是按照PathID的大小排列的，我一般是按着相应的顺序插入，不知道随意插入有没有影响，container的我则是随意插入。
+
+注意，preloadtable这里需要插入两次下图的第一个json结构。我推荐一种方法就是按PathID大小排序后，复制新增项上面那项Sprite的PathID，然后到VSC（json文件编辑器）中查找该PathID，然后在查找到的结构的下面粘贴随机生成PathID的第一个json结构，查找到的前两项的下面都要粘贴这个结构，原因会在后面讲。然后第三项，则粘贴第二个json结构。
 
 <img width="1377" height="664" alt="image" src="https://github.com/user-attachments/assets/bfd29fde-1eb0-4034-bf5f-27d94350ea5f" />
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/55d9f057-61e7-4933-a9c1-1e4c12032aad" />
 
 
-<img width="1483" height="762" alt="image" src="https://github.com/user-attachments/assets/2bc209b1-e371-47fb-bc45-5c27341f65a0" />
 
+这里讲解一下preloadtable与container的关系和index、size的赋值。可以阅读到preloadtable里加载的项包含了：一个fileid=1的项，这个项我认为是对应Assetbundle，此外还有两套Sprite和MONObehaviour，两个texture2D和一个animationclip。
 
-这里讲解一下preloadtable与container的关系，如果不想看，也可以直接跳到下一步。preloadtable里加载的项包含了：一个fileid=1的项，这个项我认为是对应Assetbundle，两套Sprite和MONObehaviour，两个texture2D。
+如果你去阅读代码，就会发现container里的preloadindex和preloadsize跟preloadtable的顺序是对应的。整个preloadtable被分为三组，组1是包含Assetbundle、一个texture2D和一套Sprite和monobehaviour，即size=Sprite数+3，组2只有一个单独的texture2D，即size=1，组3包含一个animationclip、一套MONObehaviour和Sprite，即size=Sprite数+2。还有一点，这三个组在preloadtable出现的顺序每个文件中可能是不一样的，因此会导致index的一定变化。
 
-如果你去阅读代码，就会发现container里的preloadindex和preloadsize跟preloadtable的顺序是对应的。整个preloadtable被分为三组，组1是包含Assetbundle、一个texture2D和一套Sprite和monobehaviour，组2只有一个单独的texture2D，组3包含一个animationclip、一套MONObehaviour和Sprite。还有一点，这三个组在preloadtable出现的顺序每个文件中可能是不一样的。
+然后在container中可见，组1虽然多次重复，没有出现含有Assetbundle的PathID结构：组3虽然包含了上面提到的多个东西，但可以见到只出现了animationclip的PathID结构。(这说明他们的加载调用方式是一定的，ASB调用对象包括自己、一套Sprite和monobehaviour、一个Texture2D，ANC调用对象包括自己、一套Sprite和monobehaviour。你们可以自己理解，理解不了可能也影响不大)
 
-然后在container中可见，组1没有出现Assetbundle的结构，组3只有animationclip的结构。(这说明他们的加载调用方式是有一定的，你们可以自己理解，这个不重要)
-此时，就能index和size的关系了，size就是组中有几项，index就是在preloadtable出现的位置，记住，preloadtable的索引是从0开始的，因此需要在container中一项一项的区修改index和size，这里有一个口诀，这一组的index+size等于下一组的index，按这个去修改就行。
+此时，就能推测出index和size的关系了，size就是组中有几项，index就是在该组第一项在preloadtable中出现的位置，从0开始。可以理解为size是自变量，index是因变量。size的值与Sprite有关，组1size=Sprite+3，组3size=Sprite+2，而由于组2不包含Sprite，只有一项Texture，则size=1.
+
+因此调节帧数后，需要在container中一项一项的去修改index和size，这里有一个口诀，上一组的index+size等于下一组的index，按这个去修改就行。记住一点，preloadtable的索引是从0开始数的。
 
 <img width="646" height="282" alt="image" src="https://github.com/user-attachments/assets/0e9cc4dc-f5a6-4619-8129-4bb065e1dca3" />
 
-现在告诉你如何修改，首先找到size=1的组，它的index加或减你修改的帧数也有可能是加减二倍、即Sprite项数，需要看他出现的位置。接着，size最大的和sizeMAX-1的组，size加减你的帧数。接着，修改以上二者的index，index=0或index=1则的不需要修改，其中大的那个加减帧数。如果新增了Sprite的container结构，则记得修改使同一组中的index和size使其与其他Sprite的一致。此时，Assetbundle的修改就结束了,导入即可。
+现在告诉你如何修改，因为前文提到过，三个组在preloadtable出现的顺序不一定相同，所有需要先观察三组的index和size。
+
+首先找到size=1的组，若它的index=0，则不修改；若index是在三组的index中最大，则增加二倍新增的Sprite项数，若index为中等大小值，则增加一倍新增的Sprite项数。
+
+接着，找到size最大的和sizeMAX-1的组，size增加新增的Sprite项数。接着，修改以上二者的index，index=0或index=1则的不需要修改，其中index大的那个增加新增Sprite项数。
+
+总之，规律就是上一组的index+size=下一组的index。
+
+解释一下原因，因为在原本的preloadtable中，三个组已经排好了顺序，但是因为我们新增了Sprite，在preloadtable插入了两次这两次插入就是在组1、组3中各插入了新增Sprite的结构，这时候，就会导致preloadtable的总索引增大，组1、组3的含量增大，即size增大。因此会导致排在后面的两组第一项出现的位置后移，就会导致他们的index发生相应的增加。
+
+如果想要减少帧数，则在Assetbundle进行反处理即可。
 
 
-MONObehaviour和Animationclip
+MONObehaviour和Animationclip部分
 
-MONO的修改就简单,加减帧数就直接在下图中的列表中删除Sprite的对应的结构，加帧数要在列表的最后添加，这个就是动画帧的顺序。改完就结束了。
+MONO的修改就简单,加减帧数就直接在下图中的列表中删除Sprite的对应的结构，加帧数要在列表的最后添加，这个就是动画帧的顺序，一定要按照新动画的帧顺序添加。改完就结束了。
 
 <img width="481" height="219" alt="image" src="https://github.com/user-attachments/assets/e25c32e1-8429-4057-96f8-b0671d1f1849" />
 
 animation的修改相对复杂。
 
-先讲解优化过的方法。首先先像MONO一样，修改原动画的Sprite列表。接着你可以直接导出新动画的animationclip，然后将修改过后的原动画的Sprite直接替换到新动画上。然后导入新动画修改后的animationclip。
+先讲解优化过的方法。首先先像MONO一样，修改原动画的Sprite列表，这里的名称为pptrCurveMapping。接着你可以直接导出新动画的animationclip，然后将修改过后的原动画的pptrCurveMapping列表，直接覆盖到到新动画上。然后将新动画修改后的animationclip导入原动画的animationclip项。
+
+<img width="690" height="899" alt="image" src="https://github.com/user-attachments/assets/0a230a67-ef5c-4dd7-ba7c-b7de18c25dfe" />
 
 原方法。
 
-首先先像MONO一样，修改Sprite列表。
+首先先像MONO一样，修改Sprite列表，这里的名称为pptrCurveMapping。
 
 接着，找到m_StreamedClip列表。他的数组（array）的行数是跟你的帧数有关的，为帧数*7+2。这最后的两行不要修改，在它两上面开始修改至匹配即可，(我一般是改的因为这东西会影响内存占用，不过也问过AI，AI说可改可不改)。如果添加帧数，你可以直接从新动画的animationclip里获取，我看的几个同个游戏内的streamedclip基本上使用的都是同一个序列的，只是从头开始截取的行数不同，因此可以直接从帧数多的动画里复制过来。
 
