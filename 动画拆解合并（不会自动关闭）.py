@@ -295,11 +295,9 @@ def main():
 
 if __name__ == '__main__':
     try:
-        while True:  # 添加一个循环来确保主脚本可以重复运行
-            main()
-            print("任务处理完成，可输入新的文件继续处理，按 Ctrl+C 退出。")  # 显示提示信息
-    except KeyboardInterrupt:
-        print("程序已手动退出。")
-    except BaseException:
-        traceback.print_exc()
-        input('程序错误，按回车继续...'))
+        while True:  # 无限循环
+            main()  # 调用主函数
+    except BaseException as e:
+        traceback.print_exc()  # 打印错误信息
+        print(f"程序错误: {e}")  # 提示错误
+        input('按回车键关闭程序...')
