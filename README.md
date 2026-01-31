@@ -1,10 +1,11 @@
 该替换方式可跳过一帧一帧地更换图片及其图片对齐，同时可以自由的调整帧数。需要准备AssetStudio、UABEA，然后编辑json代码我用的是Visual Studio Code。AssetStudio主要用于查找目标bundle，UABEA主要用于修改bundle。对于部分脚本的使用会在最后讲解。建议先完全阅读完一遍教程，能有个初步印象再开始进行修改。
 
+我这里有两种修改方式。分为同个游戏的其他动画替换原动画和自制动画。
 
 这里介绍使用同个游戏的其他动画替换原动画的方式，自制动画的方式在整理完会导入到其他分支的readme。
 
 
-首先，被替换的动画我称作原动画，你自己准备的动画我称作新动画。我这里有两种修改方式。分为同个游戏的其他动画替换原动画和自制动画。
+首先，被替换的动画我称作原动画，你自己准备的动画我称作新动画。
 
 
 用UABEA解包你新动画对应的bundle文件，将所有所有walk带数字的文件即Sprite文件export dump为json，texture2D文件的图片也要导出；原动画则需要导出assetbundle、animationclip、MONObehaviour的json文件。
