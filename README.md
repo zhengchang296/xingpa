@@ -1,4 +1,4 @@
-该替换方式可跳过一帧一帧地更换图片及其图片对齐，同时可以自由的调整帧数。需要准备AssetStudio、UABEA，然后编辑json代码我用的是Visual Studio Code。AssetStudio主要用于查找目标bundle，UABEA主要用于修改bundle。对于部分脚本的使用会在最后讲解。
+该替换方式可跳过一帧一帧地更换图片及其图片对齐，同时可以自由的调整帧数。需要准备AssetStudio、UABEA，然后编辑json代码我用的是Visual Studio Code。AssetStudio主要用于查找目标bundle，UABEA主要用于修改bundle。对于部分脚本的使用会在最后讲解。建议先完全阅读完一遍教程，能有个初步印象再开始进行修改。
 
 
 这里介绍使用同个游戏的其他动画替换原动画的方式，自制动画的方式在整理完会导入到其他分支的readme。
