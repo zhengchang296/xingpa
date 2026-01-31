@@ -17,31 +17,42 @@
 
 <img width="755" height="614" alt="image" src="https://github.com/user-attachments/assets/0d037de4-2e94-481b-b533-9b401fcec8cd" />
 
-最后，最痛苦的来了。修改新动画每个sprite文件的json文件，在里面找到pathID，替换为原动画动画bundle文件中Texture2D文件的pathID即路径ID。
+最后，最痛苦的来了。修改新动画每个sprite文件的json文件，在里面找到pathID，替换为原动画bundle文件中Texture2D文件的pathID即路径ID。这步已被相对简化，对应PathID的修改可使用提供的脚本修改。
 
 <img width="1121" height="80" alt="image" src="https://github.com/user-attachments/assets/b58a0991-eeed-480e-b075-7e0f536671ea" />
 
-这步已被相对简化，对应PathID的修改可使用提供的脚本修改。
+例如，上图是原动画Texture2D文件的PathID，则将下图中的PathID改为上图的PathID即可。小提醒，选中相应的文件后，可以直接在的UABEA右侧复制PathID。
 
 <img width="629" height="392" alt="image" src="https://github.com/user-attachments/assets/1336fc8d-2328-4ed4-a75c-75e832684eac" />
 
 
-接着将新动画每个sprite的json，import dump对应的原动画Sprite。如果你新动画的帧数小于原动画，记得按顺序将对应的Sprite导入，后直接删除多余的sprite文件即可，记得删数字最大的，。如果新动画帧数大于原动画，那么有两种方法。一定要看完，帧数少和方法二后面还有步骤。
+接着将新动画每个sprite的json，import dump入对应的原动画Sprite。例如，新动画的walk_00001,则导入原动画的walk_00001。如果新原动画的Sprite数量相等，则不需要进行帧数的修改，不需要修改Assetbundle、animationclip、monobehaviour的代码。只需要导入对应的Sprite后，保存就完成了。如果帧数不等，则需根据下面的方法修改后再往后做。一定要看完，帧数少和方法二的这一步，后面还有步骤。
 
-方法一，则需要修改你新动画相应json文件中的m_name。
-这一步的对应关系比较复杂，就是你现选取你需要的帧数，如你想导入新动画的00000--00010、00021--00028这些帧，那就修改新动画的名称中带相应数字的json文件，使得里面的m_name变成连续的，即将00021--00028中n_name的数字改为00011--00018，所有文件的n_name必须保持连续，这样动画运行过程中才能在相应的帧数中读取。方法一到这里就结束了，帧数少的和方法二还要往后看。
+命名这一步为  调节帧数
 
-<img width="431" height="280" alt="image" src="https://github.com/user-attachments/assets/abbe562e-837a-4749-ba17-72a54b15541b" />
+如果你新动画的帧数小于原动画，记得按顺序将对应的Sprite导入，后直接删除多余的sprite文件即可，记得删数字最大的。例如十二帧，则保留00000--00011，删除（remove）大于00011的Sprite。减少帧数的调节帧数步骤后面还有，需要往后看
 
-方法二，则是让你在原动画bundle中添加Sprite项。我比较推荐这一种。
+<img width="1377" height="664" alt="image" src="https://github.com/user-attachments/assets/1e3e3764-28c0-42a4-9e05-6975ab317fef" />
 
-首先，获得原动画的Sprite的container码，我一般是进到原动画的assetbundle里获得这个的。
+
+如果新动画帧数大于原动画，那么有两种方法。
+
+方法一，则需要你根据原动画的Sprite项的数量、即帧数，在新动画中选择相同数量是Sprite。如果这样做，就会让新动画的帧数减少。
+这一步的对应关系可能有点复杂，首先，假定你的原动画只有十九帧。然后，你需要选定在新动画00000--00028这些帧中你想要导入的帧数。例如，00000--00010，00021--00028，那么你就根据从小到大的顺序导入到原动画的00000--00018里即可。方法一调节帧数的这一步到这里就结束了。方法一在选取想要保留的帧数后，可以不需要修改Assetbundle、animationclip、monobehaviour的代码。跟帧数相等的一样，只需要导入对应的Sprite即可。
+
+
+方法二，则是让你在原动画bundle中添加Sprite项。我比较推荐这一种，因为方法二与减帧数，这两种方法是真的调节帧数。
+
+以下讲解增加帧数的方法，如果需要减少帧数，则进行相应的反处理即可。
+
+首先，获得原动画的Sprite的container码。我一般是进到原动画的assetbundle里，复制图中的first获得的，如果是按我的方法，则需要的是重复出现的first值，至于原因，则会在后文讲解。
 
 <img width="282" height="557" alt="image" src="https://github.com/user-attachments/assets/43b16734-4223-40b2-b757-50641fbd2c62" />
-<img width="580" height="298" alt="image" src="https://github.com/user-attachments/assets/6073493f-ff86-4de4-abb2-776a775e221d" />
+<img width="796" height="883" alt="image" src="https://github.com/user-attachments/assets/789e82a8-2c0c-4a27-a0ac-a1d08084156e" />
 
 
-复制后使用自动PathID脚本，输入first、preloadindex、preloadsize值，后得到一个PathID和两类代码。关于index和size会在后文介绍，这里随便输入也可以，这一步如果能够同时生成出index和size，则会相应减轻一点后面的工作量。
+
+复制后使用自动PathID脚本，输入first、preloadindex、preloadsize值，后得到一个PathID和两类代码。关于index和size会在后文介绍，这里随便输入也可以。在熟练后，可以在这一步同时生成出index和size，会相应减轻一点后面的工作量。
 
 <img width="1483" height="762" alt="image" src="https://github.com/user-attachments/assets/6afb48d9-0f93-44a6-bf6e-6d88ba5ccc37" />
 
@@ -55,20 +66,22 @@
 接着用import dump导入修改后Sprite的json文件。
 
 
-帧数少和方法二的后续步骤。以下修改都是针对原动画文件的修改，修改assetbundle的json中的preloadtable和container，修改MONObehaviour的Sprite，修改animationclip的m_StreamedClip的行数、m_FrameCount的数值、m_StopTime数值、m_ValueArrayDelta里stop的数值，然后还有一些可以修改的属性设置我会写在最后，自行判断。
+以下修改都是针对原动画文件的修改，需要修改assetbundle的json中的preloadtable和container，修改MONObehaviour的Sprite，修改animationclip的m_StreamedClip的行数、m_FrameCount的数值、m_StopTime数值、m_ValueArrayDelta里stop的数值，然后还有一些可以修改的属性设置我会写在最后，自行判断。
 
 <img width="435" height="119" alt="image" src="https://github.com/user-attachments/assets/9506df46-38f3-46c5-acf6-3dbcc5042107" />
 <img width="620" height="276" alt="image" src="https://github.com/user-attachments/assets/8d14cef2-2ac8-4555-8be9-2aece1a5baca" />
 <img width="455" height="208" alt="image" src="https://github.com/user-attachments/assets/12e79b45-1af9-4ce2-a6e5-ff4e085141a3" />
 
 
-Assetbundle
+Assetbundle文件部分
 
-帧数少的，直接删除多余SpritePathID对应的preloadtable和container的结构，如下图的结构，每个Sprite对应的有三个下类结构，记得删干净。
+需要添加相应的结构，preloadtable里Sprite的排列顺序是按照PathID的大小排列的，我一般是按着相应的顺序插入，不知道随意插入有没有影响，container的我则是随意插入。注意，preloadtable这里需要插入两次下图的第一个json结构。我推荐一种方法就是按PathID大小排序后，复制新增项上面那项Sprite的PathID，然后到VSC（json文件编辑器）中查找该PathID，
 
-<img width="1290" height="877" alt="image" src="https://github.com/user-attachments/assets/6a4a7b22-376d-44ba-a051-8a436c9b4123" />
+<img width="1377" height="664" alt="image" src="https://github.com/user-attachments/assets/bfd29fde-1eb0-4034-bf5f-27d94350ea5f" />
 
-帧数多的，则要添加相应的结构，preloadtable里Sprite的排列顺序是按照PathID的大小排列的，我一般是按着相应的顺序插入，不知道随意插入有没有影响，container的我则是插入。
+
+<img width="1483" height="762" alt="image" src="https://github.com/user-attachments/assets/2bc209b1-e371-47fb-bc45-5c27341f65a0" />
+
 
 这里讲解一下preloadtable与container的关系，如果不想看，也可以直接跳到下一步。preloadtable里加载的项包含了：一个fileid=1的项，这个项我认为是对应Assetbundle，两套Sprite和MONObehaviour，两个texture2D。
 
