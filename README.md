@@ -38,9 +38,10 @@
 <img width="580" height="298" alt="image" src="https://github.com/user-attachments/assets/6073493f-ff86-4de4-abb2-776a775e221d" />
 
 
-复制后使用自动PathID脚本，输入first值后得到一个PathID和两类代码。
+复制后使用自动PathID脚本，输入first、preloadindex、preloadsize值，后得到一个PathID和两类代码。关于index和size会在后文介绍，这里随便输入也可以，这一步如果能够同时生成出index和size，则会相应减轻一点后面的工作量。
 
-<img width="1290" height="877" alt="image" src="https://github.com/user-attachments/assets/4cccbbcb-97d8-44f1-bb74-f873ccb3dce7" />
+<img width="1483" height="762" alt="image" src="https://github.com/user-attachments/assets/6afb48d9-0f93-44a6-bf6e-6d88ba5ccc37" />
+
 
 接着，便开始添加Sprite项。使用UABEA左上角file的add，输入PathID，type栏输入Sprite或213都可以，MONO栏不变。
 
