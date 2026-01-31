@@ -8,21 +8,23 @@
 首先，被替换的动画我称作原动画，你自己准备的动画我称作新动画。
 
 
-用UABEA解包你新动画对应的bundle文件，将所有所有walk带数字的文件即Sprite文件export dump为json，texture2D文件的图片也要导出；原动画则需要导出assetbundle、animationclip、MONObehaviour的json文件。
+新动画，用UABEA解包你新动画对应的bundle文件，将所有所有walk带数字的文件即Sprite文件和上面type为Animationclip的文件，export dump为json，texture2D文件的图片使用plugins中的export导出；原动画则需要导出assetbundle、animationclip、MONObehaviour的json文件。
 
-<img width="1396" height="864" alt="image" src="https://github.com/user-attachments/assets/9a8f22ba-d854-4181-8570-43b6e841299a" />
+<img width="1377" height="664" alt="image" src="https://github.com/user-attachments/assets/5470e9b4-ad11-422c-88a2-d0931e268010" />
 <img width="1377" height="888" alt="image" src="https://github.com/user-attachments/assets/1c490d56-62cc-41fe-af84-066044ae4160" />
 
-随后用右侧的插件修改原动画的Texture2D图片，Load导入新动画动画的精灵图即texture2D的图片。
+随后，使用UABEA打开原动画的bundle，用右侧的插件修改原动画的Texture2D图片，Load导入新动画动画的精灵图即texture2D的图片。
 
 <img width="755" height="614" alt="image" src="https://github.com/user-attachments/assets/0d037de4-2e94-481b-b533-9b401fcec8cd" />
 
 最后，最痛苦的来了。修改新动画每个sprite文件的json文件，在里面找到pathID，替换为原动画动画bundle文件中Texture2D文件的pathID即路径ID。
 
+<img width="1121" height="80" alt="image" src="https://github.com/user-attachments/assets/b58a0991-eeed-480e-b075-7e0f536671ea" />
+
 这步已被相对简化，对应PathID的修改可使用提供的脚本修改。
 
 <img width="629" height="392" alt="image" src="https://github.com/user-attachments/assets/1336fc8d-2328-4ed4-a75c-75e832684eac" />
-<img width="293" height="855" alt="image" src="https://github.com/user-attachments/assets/3a9ddd22-bceb-42ac-aa1e-736367d256c4" />
+
 
 接着将新动画每个sprite的json，import dump对应的原动画Sprite。如果你新动画的帧数小于原动画，记得按顺序将对应的Sprite导入，后直接删除多余的sprite文件即可，记得删数字最大的，。如果新动画帧数大于原动画，那么有两种方法。一定要看完，帧数少和方法二后面还有步骤。
 
