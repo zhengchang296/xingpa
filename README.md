@@ -111,6 +111,8 @@ Assetbundle文件部分
 
 MONObehaviour和Animationclip部分
 
+以下介绍增加帧数的方法，减少帧数则反处理。
+
 MONO的修改就简单,加减帧数就直接在下图中的列表中删除Sprite的对应的结构，加帧数要在列表的最后添加，这个就是动画帧的顺序，一定要按照新动画的帧顺序添加。改完就结束了。
 
 <img width="481" height="219" alt="image" src="https://github.com/user-attachments/assets/e25c32e1-8429-4057-96f8-b0671d1f1849" />
@@ -143,6 +145,7 @@ animation的修改相对复杂。
 m_MuscleClipSize，我一般将原动画的这个改为新动画的。
 
 samplerate，我一般不改帧数。
+
 
 
 脚本介绍
